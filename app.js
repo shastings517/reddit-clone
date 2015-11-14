@@ -20,7 +20,7 @@ var app = angular.module("redditClone", []);
       $scope.mv = {};
       // debugger
     };
-
+2
     // $scope.vote = function(){
     //   if($scope.postRating < 0){
     //     return 
