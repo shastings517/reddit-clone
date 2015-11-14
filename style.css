@@ -1,0 +1,39 @@
+.addBtn{
+  margin-top: 8px;
+}
+
+.valid{
+  color: green;
+}
+
+.invalid{
+  color: red;
+}
+
+#postImg{
+  width:200px;
+}
+
+#post{
+  background-color: #F8F8F8;
+  border:1px solid #E7E7E7;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#date{
+  margin-top: 60px;
+}
+
+.posVote{
+  color:green;
+}
+
+.negVote{
+  color:red;
+}
+
+#formPost{
+  margin-bottom: 20px;
+}
