@@ -36,11 +36,14 @@
           <ul class="nav navbar-nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by <span class="caret"></span></a>
-              <select class="dropdown-menu">
-                <li><a ng-click="orderByVote()">Votes</a></li>
-                <li><a ng-click="orderByDate()">Date</a></li>
-                <li><a ng-click="orderByTitle()">Title</a></li>
-              </select>
+              <ul class="dropdown-menu">
+                <li id=""><a ng-click="order('vote')">Votes</a></li>
+                <span class="sortorder" ng-show="predicate === 'vote'"></span>
+                <li><a ng-click="order('date')">Date</a></li>
+                <span class="sortorder" ng-show="predicate === 'date'"></span>
+                <li><a ng-click="order('title')">Title</a></li>
+                <span class="sortorder" ng-show="predicate === 'title'"></span>
+              </ul>
             </li>
           </ul>
           <form class="navbar-form navbar-left" role="search">
@@ -64,7 +67,7 @@
         
         <!-- <h3>{{addPost.title.$error}}</h3> -->
         <div class="form-group" ng-class="{invalid:addPost.title.$invalid && addPost.title.$touched, valid:addPost.title.$valid}">
-          <label for="title">Title</label>
+          <label for="title">Title</label> 
           <input type="text" placeholder="Title" class="form-control" id="title" name="title" ng-required="true" ng-model="post.title">
 
           <p ng-show="addPost.title.$invalid && addPost.title.$touched">hey you! enter a title</p>
@@ -104,15 +107,15 @@
 
 <!-- POST TEMPLATE -->
 
-
+  
     <div class="container">
-      <div class="row" id="post" ng-repeat="item in allPosts | filter:searchText track by $index">
+      <div class="row" id="post" ng-repeat="item in allPosts | filter:searchText | orderBy:sortType:true">
         <div class="col-xs-3">
           <img ng-src="{{item.image}}" id="postImg">
         </div>
         <div class="col-xs-9">
           <div class="col-xs-9" id="postTitle">
-            <h4>{{item.title}}  | <span class="glyphicon glyphicon-arrow-up" ng-click="upRating($index)"></span>  <span class="glyphicon glyphicon-arrow-down" ng-click="downRating($index)"></span><span ng-class="{posVote:postRating > 0, negVote:postRating < 0}">  {{item.postRating}}</span></h4>
+            <h4>{{item.title}}  | <span class="glyphicon glyphicon-arrow-up" ng-click="upRating(item.$$hashKey)"></span>  <span class="glyphicon glyphicon-arrow-down" ng-click="downRating(item.$$hashKey)"></span><span ng-class="{posVote:item.postRating > 0, negVote:item.postRating < 0}">  {{item.postRating}}</span></h4>
           </div>
           <div class="col-xs-3" id="postAuthor">
             <h5 class="pull-right">by {{item.author}}</h5>
@@ -149,184 +152,12 @@
     </div>
   </div>
 
-<!-- SEED DATA -->
-  <div class="container">
-      <div class="row" id="post">
-        <div class="col-xs-3">
-          <img ng-src="http://images.vcpost.com/data/images/full/45699/deadpool.jpeg" id="postImg">
-        </div>
-        <div class="col-xs-9">
-          <div class="col-xs-9" id="postTitle">
-            <h4>DEADPOOL  | <span class="glyphicon glyphicon-arrow-up" ng-click="upRating()"></span>  <span class="glyphicon glyphicon-arrow-down" ng-click="downRating()"></span><span ng-class="{posVote:postRating > 0, negVote:postRating < 0}">  {{postRating}}</span></h4>
-          </div>
-          <div class="col-xs-3" id="postAuthor">
-            <h5 class="pull-right">by Sam Hastings</h5>
-          </div>
-          <div class="col-xs-12" id="body">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat vitae ea optio sequi. Totam voluptatem ipsum facilis itaque, et, fugit minus id, placeat porro nulla ullam reprehenderit quibusdam atque, velit. 
-          </div>
-          <div class="col-xs-12" id="date">
-            <span><span class="glyphicon glyphicon-calendar"></span> date | </span>
-            <span ng-click="commentShow = !commentShow"><span class="glyphicon glyphicon-comment"></span>  comment | </span>
-            <span ng-click="addCommentShow = !addCommentShow"><span class="glyphicon glyphicon-pencil"></span>  add comment </span>
-          </div>
-  <!-- COMMENTS TEMPLATE HIDDEN -->
-          <div class="col-xs-12" id="comments" ng-show="commentShow">
-            <div>{{author}} - {{comment}}</div>
-          </div>
-  <!-- COMMENTS FORM HIDDEN -->
-          <div class="col-xs-12" ng-show="addCommentShow">
-            <form class="form-inline">
-              <div class="form-group">
-                <label for="commentAuthor">Author</label>
-                <input type="text" class="form-control" id="commentAuthor" placeholder="Author">
-              </div>
-              <div class="form-group">
-                <label for="commentText">Text</label>
-                <input type="text" class="form-control" id="commentText" placeholder="Text">
-              </div>
-              <button type="submit" class="btn btn-default">Add Comment</button>
-            </form>
-          </div>
 
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row" id="post">
-        <div class="col-xs-3">
-          <img ng-src="http://www.theamazingspidermangame.com/etc/designs/atvi/amazing-spiderman-game/amazing-spiderman-game-2/images/features/img5.jpg" id="postImg">
-        </div>
-        <div class="col-xs-9">
-          <div class="col-xs-9" id="postTitle">
-            <h4>SPIDERMAN  | <span class="glyphicon glyphicon-arrow-up" ng-click="upRating()"></span>  <span class="glyphicon glyphicon-arrow-down" ng-click="downRating()"></span><span ng-class="{posVote:postRating > 0, negVote:postRating < 0}">  {{postRating}}</span></h4>
-          </div>
-          <div class="col-xs-3" id="postAuthor">
-            <h5 class="pull-right">by Samuel Hastings</h5>
-          </div>
-          <div class="col-xs-12" id="body">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat vitae ea optio sequi. Totam voluptatem ipsum facilis itaque, et, fugit minus id, placeat porro nulla ullam reprehenderit quibusdam atque, velit. 
-          </div>
-          <div class="col-xs-12" id="date">
-            <span><span class="glyphicon glyphicon-calendar"></span> date | </span>
-            <span ng-click="commentShow = !commentShow"><span class="glyphicon glyphicon-comment"></span>  comment | </span>
-            <span ng-click="addCommentShow = !addCommentShow"><span class="glyphicon glyphicon-pencil"></span>  add comment </span>
-          </div>
-  <!-- COMMENTS TEMPLATE HIDDEN -->
-          <div class="col-xs-12" id="comments" ng-show="commentShow">
-            <div>{{author}} - {{comment}}</div>
-          </div>
-  <!-- COMMENTS FORM HIDDEN -->
-          <div class="col-xs-12" ng-show="addCommentShow">
-            <form class="form-inline">
-              <div class="form-group">
-                <label for="commentAuthor">Author</label>
-                <input type="text" class="form-control" id="commentAuthor" placeholder="Author">
-              </div>
-              <div class="form-group">
-                <label for="commentText">Text</label>
-                <input type="text" class="form-control" id="commentText" placeholder="Text">
-              </div>
-              <button type="submit" class="btn btn-default">Add Comment</button>
-            </form>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row" id="post">
-        <div class="col-xs-3">
-          <img ng-src="https://i.ytimg.com/vi/FEZLYYeECtc/maxresdefault.jpg" id="postImg">
-        </div>
-        <div class="col-xs-9">
-          <div class="col-xs-9" id="postTitle">
-            <h4>BATMAN  | <span class="glyphicon glyphicon-arrow-up" ng-click="upRating()"></span>  <span class="glyphicon glyphicon-arrow-down" ng-click="downRating()"></span><span ng-class="{posVote:postRating > 0, negVote:postRating < 0}">  {{postRating}}</span></h4>
-          </div>
-          <div class="col-xs-3" id="postAuthor">
-            <h5 class="pull-right">by Ben Hastings</h5>
-          </div>
-          <div class="col-xs-12" id="body">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat vitae ea optio sequi. Totam voluptatem ipsum facilis itaque, et, fugit minus id, placeat porro nulla ullam reprehenderit quibusdam atque, velit. 
-          </div>
-          <div class="col-xs-12" id="date">
-            <span><span class="glyphicon glyphicon-calendar"></span> date | </span>
-            <span ng-click="commentShow = !commentShow"><span class="glyphicon glyphicon-comment"></span>  comment | </span>
-            <span ng-click="addCommentShow = !addCommentShow"><span class="glyphicon glyphicon-pencil"></span>  add comment </span>
-          </div>
-  <!-- COMMENTS TEMPLATE HIDDEN -->
-          <div class="col-xs-12" id="comments" ng-show="commentShow">
-            <div>{{author}} - {{comment}}</div>
-          </div>
-  <!-- COMMENTS FORM HIDDEN -->
-          <div class="col-xs-12" ng-show="addCommentShow">
-            <form class="form-inline">
-              <div class="form-group">
-                <label for="commentAuthor">Author</label>
-                <input type="text" class="form-control" id="commentAuthor" placeholder="Author">
-              </div>
-              <div class="form-group">
-                <label for="commentText">Text</label>
-                <input type="text" class="form-control" id="commentText" placeholder="Text">
-              </div>
-              <button type="submit" class="btn btn-default">Add Comment</button>
-            </form>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row" id="post">
-        <div class="col-xs-3">
-          <img ng-src="http://cdn.zmescience.com/wp-content/uploads/2013/07/superman-mkvsdc-1.jpg" id="postImg">
-        </div>
-        <div class="col-xs-9">
-          <div class="col-xs-9" id="postTitle">
-            <h4>SUPERMAN  | <span class="glyphicon glyphicon-arrow-up" ng-click="upRating()"></span>  <span class="glyphicon glyphicon-arrow-down" ng-click="downRating()"></span><span ng-class="{posVote:postRating > 0, negVote:postRating < 0}">  {{postRating}}</span></h4>
-          </div>
-          <div class="col-xs-3" id="postAuthor">
-            <h5 class="pull-right">by Ben Hastings</h5>
-          </div>
-          <div class="col-xs-12" id="body">
-            Superman looks goofy as fuck Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat vitae ea optio sequi. Totam voluptatem ipsum facilis itaque, et, fugit minus id, placeat porro nulla ullam reprehenderit quibusdam atque, velit. 
-          </div>
-          <div class="col-xs-12" id="date">
-            <span><span class="glyphicon glyphicon-calendar"></span> date | </span>
-            <span ng-click="commentShow = !commentShow"><span class="glyphicon glyphicon-comment"></span>  comment | </span>
-            <span ng-click="addCommentShow = !addCommentShow"><span class="glyphicon glyphicon-pencil"></span>  add comment </span>
-          </div>
-  <!-- COMMENTS TEMPLATE HIDDEN -->
-          <div class="col-xs-12" id="comments" ng-show="commentShow">
-            <div>{{author}} - {{comment}}</div>
-          </div>
-  <!-- COMMENTS FORM HIDDEN -->
-          <div class="col-xs-12" ng-show="addCommentShow">
-            <form class="form-inline">
-              <div class="form-group">
-                <label for="commentAuthor">Author</label>
-                <input type="text" class="form-control" id="commentAuthor" placeholder="Author">
-              </div>
-              <div class="form-group">
-                <label for="commentText">Text</label>
-                <input type="text" class="form-control" id="commentText" placeholder="Text">
-              </div>
-              <button type="submit" class="btn btn-default">Add Comment</button>
-            </form>
-          </div>
-
-        </div>
-      </div>
-    </div>
+  
 
 <br><br><br>
 
-<!-- COMMENT FORM -->
 
-
-
-
-<br><br><br>
 
 
 
