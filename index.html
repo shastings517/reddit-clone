@@ -36,11 +36,11 @@
           <ul class="nav navbar-nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Votes</a></li>
-                <li><a href="#">Date</a></li>
-                <li><a href="#">Title</a></li>
-              </ul>
+              <select class="dropdown-menu">
+                <li><a ng-click="orderByVote()">Votes</a></li>
+                <li><a ng-click="orderByDate()">Date</a></li>
+                <li><a ng-click="orderByTitle()">Title</a></li>
+              </select>
             </li>
           </ul>
           <form class="navbar-form navbar-left" role="search">
@@ -106,13 +106,13 @@
 
 
     <div class="container">
-      <div class="row" id="post" ng-repeat="item in allPosts | filter:searchText | orderBy:['votes','date','title']" ng-controller="PostController">
+      <div class="row" id="post" ng-repeat="item in allPosts | filter:searchText track by $index">
         <div class="col-xs-3">
           <img ng-src="{{item.image}}" id="postImg">
         </div>
         <div class="col-xs-9">
           <div class="col-xs-9" id="postTitle">
-            <h4>{{item.title}}  | <span class="glyphicon glyphicon-arrow-up" ng-click="upRating()"></span>  <span class="glyphicon glyphicon-arrow-down" ng-click="downRating()"></span><span ng-class="{posVote:postRating > 0, negVote:postRating < 0}">  {{postRating}}</span></h4>
+            <h4>{{item.title}}  | <span class="glyphicon glyphicon-arrow-up" ng-click="upRating($index)"></span>  <span class="glyphicon glyphicon-arrow-down" ng-click="downRating($index)"></span><span ng-class="{posVote:postRating > 0, negVote:postRating < 0}">  {{item.postRating}}</span></h4>
           </div>
           <div class="col-xs-3" id="postAuthor">
             <h5 class="pull-right">by {{item.author}}</h5>

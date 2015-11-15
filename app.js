@@ -7,6 +7,7 @@ var app = angular.module("redditClone", []);
     $scope.post = {};
     $scope.allPosts = [];
     $scope.formVisible = false;
+
     // $scope.button = false;
 
     
@@ -16,6 +17,7 @@ var app = angular.module("redditClone", []);
     // };
 
     $scope.newPost = function(post){
+      $scope.post.postRating = 0;
       $scope.allPosts.push($scope.post);
       $scope.post = {};
       $scope.formVisible = !$scope.formVisible;
@@ -23,7 +25,7 @@ var app = angular.module("redditClone", []);
       $scope.addPost.author.$touched = false;
       $scope.addPost.image.$touched = false;
       $scope.addPost.description.$touched = false;
-      $scope.post.postRating = 0;
+
 
 
       
@@ -32,24 +34,40 @@ var app = angular.module("redditClone", []);
     $scope.showForm = function(){
       $scope.formVisible = !$scope.formVisible;
     };
-  });
-
-  app.controller('PostController', function($scope){
-
-    $scope.postRating = 0;
-    $scope.post.
 
 
-    $scope.upRating = function(){
-      $scope.postRating++;
-      debugger
+
+    // function changeDesc( value, desc ) {
+    //    for (var i in projects) {
+    //      if (projects[i].value == value) {
+    //         projects[i].desc = desc;
+    //         break; //Stop this loop, we found it!
+    //      }
+    //    }
+    // }
+
+    $scope.upRating = function($index){
+      // for (var i in $scope.allPosts) {
+        $scope.allPosts[$index].postRating++;
+        
+      
+
     };
 
-    $scope.downRating = function(){
-      $scope.postRating--;
+    $scope.downRating = function($index){
+      $scope.allPosts[$index].postRating--;
+    };
+
+    $scope.orderByVote = function(){
+      
     };
 
   });
+
+
+
+
+
 
     
   
