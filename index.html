@@ -37,12 +37,12 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li id=""><a ng-click="order('vote')">Votes</a></li>
-                <span class="sortorder" ng-show="predicate === 'vote'"></span>
-                <li><a ng-click="order('date')">Date</a></li>
-                <span class="sortorder" ng-show="predicate === 'date'"></span>
-                <li><a ng-click="order('title')">Title</a></li>
-                <span class="sortorder" ng-show="predicate === 'title'"></span>
+                <li><a ng-click="sortType = 'postRating'; sortReverse = true">Votes</a></li>
+                <!-- <span class="sortorder" ng-show="predicate === 'vote'"></span> -->
+                <li><a ng-click="sortType = 'date'">Date</a></li>
+                <!-- <span class="sortorder" ng-show="predicate === 'date'"></span> -->
+                <li><a ng-click="sortType = 'title'; sortReverse = false">Title</a></li>
+                <!-- <span class="sortorder" ng-show="predicate === 'title'"></span> -->
               </ul>
             </li>
           </ul>
@@ -60,6 +60,7 @@
 
 
 <!-- ADD POST FORM   -->
+
     <div class="container">
       <div class="row" ng-show="formVisible">
 
@@ -107,9 +108,11 @@
 
 <!-- POST TEMPLATE -->
 
+        <h3>sortType: {{sortType}}</h3>
+        <h3>sortReverse: {{sortReverse}}</h3>
   
     <div class="container">
-      <div class="row" id="post" ng-repeat="item in allPosts | filter:searchText | orderBy:sortType:true">
+      <div class="row" id="post" ng-repeat="item in allPosts | filter:searchText | orderBy:sortType:sortReverse">
         <div class="col-xs-3">
           <img ng-src="{{item.image}}" id="postImg">
         </div>
