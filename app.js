@@ -1,4 +1,4 @@
-var app = angular.module("redditClone", []);
+var app = angular.module("redditClone", ['angularMoment']);
   app.controller('EventController', function($scope, $filter){
     
     $scope.post = {};
@@ -40,11 +40,11 @@ var app = angular.module("redditClone", []);
     
     $scope.newPost = function(post){
       $scope.post.postRating = 0;
-      // $scope.post.id = 0;
-      // $scope.post.id++;
+      $scope.post.date = new Date();
       $scope.allPosts.push($scope.post);
       $scope.post = {};
       $scope.formVisible = !$scope.formVisible;
+      // RESET FORM
       $scope.addPost.title.$touched = false;
       $scope.addPost.author.$touched = false;
       $scope.addPost.image.$touched = false;
