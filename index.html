@@ -106,9 +106,9 @@
 
 <!-- POST TEMPLATE -->
 
-        <h3>sortType: {{sortType}}</h3>
+        <!-- <h3>sortType: {{sortType}}</h3>
         <h3>sortReverse: {{sortReverse}}</h3>
-        <h3>date: {{date}}</h3>
+        <h3>date: {{date}}</h3> -->
   
     <div class="container">
       <div class="row" id="post" ng-repeat="item in allPosts | filter:searchText | orderBy:sortType:sortReverse">
@@ -125,30 +125,32 @@
           <div class="col-xs-12" id="body">
             {{item.description}}
           </div>
-          <div class="col-xs-12" id="date">
+          <div class="col-xs-12" id="date" ng-controller="CommentController">
+            <!-- <h3>commentShow: {{commentShow}}</h3> -->
             <span class="glyphicon glyphicon-calendar"></span>&nbsp;<span am-time-ago="item.date"></span>&nbsp;|
             <span ng-click="commentShow = !commentShow"><span class="glyphicon glyphicon-comment"></span>  comments | </span>
             <span ng-click="addCommentShow = !addCommentShow"><span class="glyphicon glyphicon-pencil"></span>  add comment </span>
-          </div>
-  <!-- COMMENTS TEMPLATE HIDDEN -->
-          <div class="col-xs-12" id="comments" ng-show="commentShow">
-            <div>{{author}} - {{comment}}</div>
-          </div>
-  <!-- COMMENTS FORM HIDDEN -->
-          <div class="col-xs-12" ng-show="addCommentShow">
-            <form class="form-inline">
-              <div class="form-group">
-                <label for="commentAuthor">Author</label>
-                <input type="text" class="form-control" id="commentAuthor" placeholder="Author">
-              </div>
-              <div class="form-group">
-                <label for="commentText">Text</label>
-                <input type="text" class="form-control" id="commentText" placeholder="Text">
-              </div>
-              <button type="submit" class="btn btn-default">Add Comment</button>
-            </form>
-          </div>
 
+  <!-- COMMENTS FORM HIDDEN -->
+            <div class="col-xs-12" id="addComment" ng-show="addCommentShow">
+              <form class="form-inline" name="addComment" ng-submit="newComment(comment)" novalidate>
+                <div class="form-group">
+                  <label for="commentAuthor">Author</label>
+                  <input type="text" class="form-control" id="commentAuthor" placeholder="Author" name="author" ng-model="comment.author">
+                </div>
+                <div class="form-group">
+                  <label for="commentText">Text</label>
+                  <input type="text" class="form-control" id="commentText" placeholder="Text" name="text" ng-model="comment.text">
+                </div>
+                <button type="submit" class="btn btn-default">Add Comment</button>
+              </form>
+            </div>
+  <!-- COMMENTS TEMPLATE HIDDEN -->
+            <div class="col-xs-12" id="comments" ng-show="commentShow">
+              <div ng-repeat="comment in allComments">{{comment.author}} - {{comment.text}}</div>
+            </div>
+          </div>
+          <!-- CommentController scope end -->
         </div>
       </div>
     </div>

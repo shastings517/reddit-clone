@@ -41,6 +41,7 @@ var app = angular.module("redditClone", ['angularMoment']);
     $scope.newPost = function(post){
       $scope.post.postRating = 0;
       $scope.post.date = new Date();
+      
       $scope.allPosts.push($scope.post);
       $scope.post = {};
       $scope.formVisible = !$scope.formVisible;
@@ -49,7 +50,7 @@ var app = angular.module("redditClone", ['angularMoment']);
       $scope.addPost.author.$touched = false;
       $scope.addPost.image.$touched = false;
       $scope.addPost.description.$touched = false;
-      // debugger
+
     };
 
     $scope.showForm = function(){
@@ -74,34 +75,17 @@ var app = angular.module("redditClone", ['angularMoment']);
         }
       }
     };
+  });    
 
+  app.controller('CommentController', function($scope, $filter){
+    
+    $scope.allComments = [];
+    $scope.comment = {};
+
+    $scope.newComment = function(comment){
+      $scope.allComments.push($scope.comment);
+      $scope.comment = {};
+        
+      };
   });
 
-
-
-
-
-
-    
-  
-
-
-  // var app = angular.module("signInApp", []);
-
-  //   app.controller("EventController", function($scope){
-
-  //     $scope.myRegex = /^\d{5}$/;
-  //     $scope.mv = {};
-  //     $scope.userArr = [];
-
-
-  //     $scope.submit = function() {  
-  //       $scope.userArr.push($scope.mv);
-  //     // debugger
-  //       $scope.mv = {};
-  //       $scope.signIn.$setPristine();
-  //     };
-
-
-
-  //   });
