@@ -39,7 +39,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a ng-click="sortType = 'postRating'; sortReverse = true">Votes</a></li>
-                <li><a ng-click="sortType = 'date'">Date</a></li>
+                <li><a ng-click="sortType = 'date'; sortReverse = true">Date</a></li>
                 <li><a ng-click="sortType = 'title'; sortReverse = false">Title</a></li>
               </ul>
             </li>
@@ -123,11 +123,11 @@
             <h5 class="pull-right">by {{item.author}}</h5>
           </div>
           <div class="col-xs-12" id="body">
-            <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat vitae ea optio sequi. Totam voluptatem ipsum facilis itaque, et, fugit minus id, placeat porro nulla ullam reprehenderit quibusdam atque, velit.  -->{{item.description}}
+            {{item.description}}
           </div>
           <div class="col-xs-12" id="date">
-            <span><span class="glyphicon glyphicon-calendar"></span> {{item.date}} | </span>
-            <span ng-click="commentShow = !commentShow"><span class="glyphicon glyphicon-comment"></span>  comment | </span>
+            <span class="glyphicon glyphicon-calendar"></span>&nbsp;<span am-time-ago="item.date"></span>&nbsp;|
+            <span ng-click="commentShow = !commentShow"><span class="glyphicon glyphicon-comment"></span>  comments | </span>
             <span ng-click="addCommentShow = !addCommentShow"><span class="glyphicon glyphicon-pencil"></span>  add comment </span>
           </div>
   <!-- COMMENTS TEMPLATE HIDDEN -->
