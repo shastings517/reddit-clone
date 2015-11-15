@@ -18,54 +18,54 @@
 
 
 <!-- NAVBAR -->
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Reddit Clone</a>
-      </div>
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Votes</a></li>
-              <li><a href="#">Date</a></li>
-              <li><a href="#">Title</a></li>
-            </ul>
-          </li>
-        </ul>
-        <form class="navbar-form navbar-left" role="search">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
-          </div>
-        </form>
-        <ul class="nav navbar-nav navbar-right">
-          <li><button type="" class="btn btn-default addBtn" ng-click="addPostShow = !addPostShow"><span class="glyphicon glyphicon-plus">&nbsp;</span>Add Post</button></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
+  <div ng-controller="EventController">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Reddit Clone</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Votes</a></li>
+                <li><a href="#">Date</a></li>
+                <li><a href="#">Title</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+            </div>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><button type="" class="btn btn-default addBtn" ng-click="showForm()"><span class="glyphicon glyphicon-plus">&nbsp;</span>Add Post</button></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
 
 
 <!-- ADD POST FORM   -->
-  <div ng-controller="EventController">
     <div class="container">
-      <div class="row" ng-show="addPostShow">
+      <div class="row" ng-show="formVisible">
 
-      <form name="addPost" id="formPost" ng-submit="newPost()" ng-hide="addPost.$submitted" novalidate>
+      <form name="addPost" id="formPost" ng-submit="newPost(post)" novalidate>
         
         <!-- <h3>{{addPost.title.$error}}</h3> -->
         <div class="form-group" ng-class="{invalid:addPost.title.$invalid && addPost.title.$touched, valid:addPost.title.$valid}">
           <label for="title">Title</label>
-          <input type="text" placeholder="Title" class="form-control" id="title" name="title" ng-required="true" ng-model="mv.title">
+          <input type="text" placeholder="Title" class="form-control" id="title" name="title" ng-required="true" ng-model="post.title">
 
           <p ng-show="addPost.title.$invalid && addPost.title.$touched">hey you! enter a title</p>
         </div>
@@ -73,7 +73,7 @@
         <!-- <h3>{{addPost.author.$error}}</h3> -->
         <div class="form-group" ng-class="{invalid:addPost.author.$invalid && addPost.author.$touched, valid:addPost.author.$valid}">
           <label for="author">Author</label>
-            <input type="text" placeholder="Author" class="form-control" id="author" name="author" ng-required="true" ng-model="mv.author">
+            <input type="text" placeholder="Author" class="form-control" id="author" name="author" ng-required="true" ng-model="post.author">
 
             <p ng-show="addPost.author.$invalid && addPost.author.$touched">umm yeah you need to enter your name</p>
         </div>
@@ -81,7 +81,7 @@
         <!-- <h3>{{addPost.image.$error}}</h3> -->
         <div class="form-group" ng-class="{invalid:addPost.image.$invalid && addPost.image.$touched, valid:addPost.image.$valid}">
           <label for="image">Image URL</label>
-          <input type="text" placeholder="Image URL" class="form-control" id="image" name="image" ng-required="true" ng-model="mv.image">
+          <input type="text" placeholder="Image URL" class="form-control" id="image" name="image" ng-required="true" ng-model="post.image">
             
             <p ng-show="addPost.image.$invalid && addPost.image.$touched">this will be boring without a picture</p>
         </div>
@@ -89,11 +89,12 @@
         <!-- <h3>{{addPost.description.$error}}</h3> -->
         <div class="form-group" ng-class="{invalid:addPost.description.$invalid && addPost.description.$touched, valid:addPost.description.$valid}">
           <label for="description">Description</label>
-            <input type="text" placeholder="Description" class="form-control" id="description" name="description" ng-required="true" ng-model="mv.description">
+            <input type="text" placeholder="Description" class="form-control" id="description" name="description" ng-required="true" ng-model="post.description">
 
             <p ng-show="addPost.description.$invalid && addPost.description.$touched">this will be even more boring without a description</p>
         </div>
 
+        <div ng-model="post.postRating"></div>
         
         <button type="submit" class="btn btn-default" ng-disabled="addPost.$invalid">Submit Post</button>
       </form>
@@ -105,7 +106,7 @@
 
 
     <div class="container">
-      <div class="row" id="post" ng-repeat="item in allPosts">
+      <div class="row" id="post" ng-repeat="item in allPosts | filter:searchText | orderBy:['votes','date','title']" ng-controller="PostController">
         <div class="col-xs-3">
           <img ng-src="{{item.image}}" id="postImg">
         </div>
